@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const Post = require("./models/post");
-
+const config = require("./config");
 const app = express();
 
 mongoose
   .connect(
-    "mongodb+srv://dari:fMBwaZQy5BolLlUw@cluster0.xxdwy.mongodb.net/node-angular?retryWrites=true&w=majority",
+    `mongodb+srv://${config.mongoUsr}:${config.mongoURI}@cluster0.xxdwy.mongodb.net/node-angular?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true },
   )
   .then(() => {
