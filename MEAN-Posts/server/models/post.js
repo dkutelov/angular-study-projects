@@ -9,6 +9,10 @@ const postSchema = Schema({
     type: String,
     required: true,
   },
+  imageURL: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = model("Post", postSchema);

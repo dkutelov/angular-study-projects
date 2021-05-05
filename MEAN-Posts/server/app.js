@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const config = require("./config");
 const app = express();
@@ -8,7 +9,11 @@ const postsRouter = require("./routes/posts");
 mongoose
   .connect(
     `mongodb+srv://${config.mongoUsr}:${config.mongoURI}@cluster0.xxdwy.mongodb.net/node-angular?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    },
   )
   .then(() => {
     console.log("DB connected!");
@@ -37,6 +42,8 @@ app.use(
     extended: true,
   }),
 );
+
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 app.use("/api/posts", postsRouter);
 
