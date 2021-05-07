@@ -106,3 +106,8 @@ dist
 .DS_Store
 
 MEAN-Posts/server/config.js
+
+# image files
+*.png
+*.jpg
+*.jpeg
