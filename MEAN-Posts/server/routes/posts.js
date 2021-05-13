@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const auth = require("../middleware/auth");
 
 const Post = require("../models/post");
 
@@ -27,24 +28,29 @@ const storage = multer.diskStorage({
   },
 });
 
-router.post("/", multer({ storage }).single("image"), (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content,
-    imageURL: url + "/images/" + req.file.filename,
-  });
-
-  post.save().then((createdPost) => {
-    res.status(201).json({
-      message: "Post added successfully!",
-      post: {
-        ...createdPost.toObject(),
-        id: createdPost._id,
-      },
+router.post(
+  "/",
+  auth,
+  multer({ storage }).single("image"),
+  (req, res, next) => {
+    const url = req.protocol + "://" + req.get("host");
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      imageURL: url + "/images/" + req.file.filename,
     });
-  });
-});
+
+    post.save().then((createdPost) => {
+      res.status(201).json({
+        message: "Post added successfully!",
+        post: {
+          ...createdPost.toObject(),
+          id: createdPost._id,
+        },
+      });
+    });
+  },
+);
 
 router.get("/", (req, res, next) => {
   const pageIndex = Number(req.query.pageindex);
@@ -83,26 +89,31 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-router.put("/:id", multer({ storage }).single("image"), (req, res, next) => {
-  const id = req.params.id;
-  let { title, content, imageURL } = req.body;
+router.put(
+  "/:id",
+  auth,
+  multer({ storage }).single("image"),
+  (req, res, next) => {
+    const id = req.params.id;
+    let { title, content, imageURL } = req.body;
 
-  if (req.file) {
-    const url = req.protocol + "://" + req.get("host");
-    imageURL = url + "/images/" + req.file.filename;
-  }
-  const post = {
-    title,
-    content,
-    imageURL,
-  };
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+      imageURL = url + "/images/" + req.file.filename;
+    }
+    const post = {
+      title,
+      content,
+      imageURL,
+    };
 
-  Post.findOneAndUpdate({ _id: id }, post, { new: true }).then((result) => {
-    res.status(200).json({ message: "Update successful!", post: result });
-  });
-});
+    Post.findOneAndUpdate({ _id: id }, post, { new: true }).then((result) => {
+      res.status(200).json({ message: "Update successful!", post: result });
+    });
+  },
+);
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", auth, (req, res, next) => {
   const id = req.params.id;
   Post.deleteOne({ _id: id }).then(() => {
     res.json({ message: "Post deleted successfully!" });
