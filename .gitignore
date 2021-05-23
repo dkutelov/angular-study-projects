@@ -111,3 +111,5 @@ MEAN-Posts/server/config.js
 *.png
 *.jpg
 *.jpeg
+
+DatingApp/client/ssl
