@@ -17,7 +17,10 @@
       id="navbarCollapse"
       style="justify-content: flex-end"
     >
-      <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="loggedIn">
+      <ul
+        class="navbar-nav me-auto mb-2 mb-md-0"
+        *ngIf="accountSerivce.currentUser$ | async"
+      >
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="#">Matches</a>
         </li>
@@ -29,7 +32,11 @@
         </li>
       </ul>
 
-      <div class="dropdown" *ngIf="loggedIn" dropdown>
+      <div
+        class="dropdown"
+        *ngIf="accountSerivce.currentUser$ | async"
+        dropdown
+      >
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
           <div class="dropdown-item">Edit Profile</div>
@@ -38,7 +45,7 @@
         </div>
       </div>
       <form
-        *ngIf="!loggedIn"
+        *ngIf="(accountSerivce.currentUser$ | async) === null"
         #loginForm="ngForm"
         (ngSubmit)="login()"
         class="d-flex"

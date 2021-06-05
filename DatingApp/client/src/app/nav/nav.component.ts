@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,18 +11,22 @@ import { AccountService } from '../_services/account.service';
 export class NavComponent implements OnInit {
   model: any = {};
   // default value of boolean is false
-  loggedIn: boolean;
+  //loggedIn: boolean;
+  //currentUser$: Observable<User>;
 
-  constructor(private accountSerivce: AccountService) {}
+  // need to make accountService public to access in template
+  constructor(public accountSerivce: AccountService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //this.currentUser$ = this.accountSerivce.currentUser$;
+  }
 
   login() {
     // Observables are lazy. They do nothing if we do not subscribe.
     this.accountSerivce.login(this.model).subscribe(
       (response) => {
         console.log(response);
-        this.loggedIn = true;
+        // this.loggedIn = true;
       },
       (error) => {
         console.log(error);
@@ -29,6 +35,13 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    this.loggedIn = false;
+    // this.loggedIn = false;
+    this.accountSerivce.logout();
   }
+
+  // getCurrentUser() {
+  //   this.accountSerivce.currentUser$.subscribe((user) => {
+  //     this.loggedIn = !!user;
+  //   });
+  // }
 }
