@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 //1. Service is injectable
@@ -10,7 +11,7 @@ import { User } from '../_models/user';
 })
 export class AccountService {
   //2. Services are singleton; data created are stored for the lifetime of the app; in components these are distroyed
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
 
   private currentUserSource = new ReplaySubject<User>(1);
   // ReplaySubject - special type of observable, upon subscribe it emits the last value
