@@ -26,7 +26,7 @@ export class MemberDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.laodMember();
+    this.loadMember();
     this.galleryOptions = [
       {
         width: '500px',
@@ -42,20 +42,19 @@ export class MemberDetailComponent implements OnInit {
   }
 
   getImages(): NgxGalleryImage[] {
-    const imageUrls = [];
+    let imageUrls = [];
 
-    for (const photo of this.member.photos) {
+    this.member.photos.forEach((photo) => {
       imageUrls.push({
         small: photo?.url,
         medium: photo?.url,
         big: photo?.url,
       });
-
-      return imageUrls;
-    }
+    });
+    return imageUrls;
   }
 
-  laodMember() {
+  loadMember() {
     this.memberService
       .getMember(this.route.snapshot.paramMap.get('username'))
       .subscribe((member) => {
