@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../services/modal.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { ModalService } from '../services/modal.service';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
+  @Input() tabTitle = '';
+
   constructor(public modal: ModalService) {}
 
   ngOnInit(): void {}
