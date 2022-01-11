@@ -18,4 +18,10 @@
   <p class="text-red-400" *ngIf="control.errors?.['email']">
     You must enter a valid email!
   </p>
+  <p class="text-red-400" *ngIf="control.errors?.['min']">Age is too low!</p>
+  <p class="text-red-400" *ngIf="control.errors?.['max']">Age is too high!</p>
+  <p class="text-red-400" *ngIf="control.errors?.['pattern']">
+    Password must be at least 8 characters long and contain an uppercase letter,
+    an lowercase letter, and a number!
+  </p>
 </ng-container>
