@@ -10,7 +10,7 @@ export class RegisterComponent {
   // Declare outside FormGroup otherwise the props will have type AbstractControl
   // new new FormControl -> type FormControl that we can pass down to Input component
   name = new FormControl('', [Validators.required, Validators.minLength(3)]);
-  email = new FormControl('');
+  email = new FormControl('', [Validators.required, Validators.email]);
   age = new FormControl('');
   password = new FormControl('');
   phoneNumber = new FormControl('');
