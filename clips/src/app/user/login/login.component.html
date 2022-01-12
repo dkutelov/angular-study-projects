@@ -3,23 +3,42 @@
   <div class="mb-3">
     <label class="inline-block mb-2">Email</label>
     <input
+      #email="ngModel"
       type="email"
       name="email"
       [(ngModel)]="credentials.email"
       class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
       placeholder="Enter Email"
+      required
+      pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
     />
+    <p
+      *ngIf="email.errors && email.touched && email.dirty"
+      class="text-red-400"
+    >
+      Email is invalid!
+    </p>
   </div>
   <!-- Password -->
   <div class="mb-3">
     <label class="inline-block mb-2">Password</label>
     <input
+      #password="ngModel"
       type="password"
       name="password"
       [(ngModel)]="credentials.password"
       class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
       placeholder="Password"
+      required
+      pattern="^(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
     />
+    <p
+      *ngIf="password.errors && password.touched && password.dirty"
+      class="text-red-400"
+    >
+      Password is required! Password must be at least 8 characters long and
+      contain an uppercase letter, an lowercase letter, and a number!
+    </p>
   </div>
   <button
     type="submit"
