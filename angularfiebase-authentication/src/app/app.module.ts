@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthService } from './shared/services/auth.service';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
@@ -20,7 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
