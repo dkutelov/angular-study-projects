@@ -30,31 +30,36 @@ export class AuthService {
     });
   }
 
-  signIn(email: string, password: string) {
-    return this.angularFireAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        this.setUserData(result.user);
-      });
-  }
+  signIn(email: string, password: string) {}
+  // async signIn(email: string, password: string) {
+  //   try {
+  //     const result = await this.angularFireAuth.signInWithEmailAndPassword(
+  //       email,
+  //       password
+  //     );
+  //     this.ngZone.run(() => {
+  //       this.router.navigate(['dashboard']);
+  //     });
+  //     this.setUserData(result.user);
+  //   } catch (error: any) {
+  //     window.alert(error.message);
+  //   }
+  // }
 
-  setUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
+  // setUserData(user: any) {
+  //   const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
+  //     `users/${user.uid}`
+  //   );
+  //   const userData: User = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL,
+  //     emailVerified: user.emailVerified,
+  //   };
 
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
+  //   return userRef.set(userData, {
+  //     merge: true,
+  //   });
+  // }
 }
