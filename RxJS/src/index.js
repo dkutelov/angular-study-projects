@@ -5,12 +5,61 @@ import { Observable } from "rxjs";
 
 //Observable: create new instance of Observable class
 const obsevable = new Observable((subscriber) => {
-  // pass data to observer function next
+  // push data to observer function next
   subscriber.next("Hello, world");
+
+  //Throw error -> terminates the observable
+  subscriber.error("Error!");
+
+  // push next value
+  subscriber.next("Test");
+
+  // Complete the observable -> further next will not be executed
+  subscriber.complete();
 });
 
+//Observer
 obsevable.subscribe({
   next: (value) => {
     console.log(value);
+  },
+  complete: () => {
+    // no data can be passed
+    console.log("Completed!");
+  },
+  error: (err) => {
+    console.error(err);
   }
 }); // pass observer with function next to handle the data
+
+//Async Observable
+const asyncObsevable = new Observable((subscriber) => {
+  const id = setInterval(() => {
+    subscriber.next("async test");
+    console.log("leak");
+  }, 1000);
+
+  subscriber.complete();
+  // clear asyn tasks since setInterval will continue after .complete();
+  return () => {
+    clearInterval(id);
+  };
+});
+
+console.log("--before--");
+
+//Observer
+asyncObsevable.subscribe({
+  next: (value) => {
+    console.log(value);
+  },
+  complete: () => {
+    // no data can be passed
+    console.log("Completed!");
+  },
+  error: (err) => {
+    console.error(err);
+  }
+});
+
+console.log("--after--");
