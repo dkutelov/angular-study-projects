@@ -4,6 +4,7 @@ import {
   AuthGuard,
   redirectUnauthorizedTo,
   redirectLoggedInTo,
+  canActivate,
 } from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
@@ -14,8 +15,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedInToHome },
+    ...canActivate(redirectLoggedInToHome),
+    // or alternatively:
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectLoggedInToHome },
   },
   {
     path: 'dashboard',
@@ -23,8 +26,9 @@ const routes: Routes = [
       import('./features/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    ...canActivate(redirectUnauthorizedToLogin),
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: '**',
