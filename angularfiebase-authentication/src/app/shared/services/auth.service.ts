@@ -1,12 +1,13 @@
-import firebase from 'firebase/compat/app';
+//import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-//import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+//import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+// import {
+//   AngularFirestore,
+//   AngularFirestoreDocument,
+// } from '@angular/fire/compat/firestore';
 
 import { User } from '../services/user';
 @Injectable({
@@ -15,19 +16,19 @@ import { User } from '../services/user';
 export class AuthService {
   userData: any;
   constructor(
-    public angularFireAuth: AngularFireAuth,
+    public auth: Auth,
     public router: Router,
     public ngZone: NgZone,
-    public angularFirestore: AngularFirestore
+    public firestore: Firestore
   ) {
-    this.angularFireAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-      } else {
-        localStorage.setItem('user', 'null');
-      }
-    });
+    // this.angularFireAuth.authState.subscribe((user) => {
+    //   if (user) {
+    //     this.userData = user;
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //   } else {
+    //     localStorage.setItem('user', 'null');
+    //   }
+    // });
   }
 
   signIn(email: string, password: string) {}
