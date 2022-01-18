@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 import { environment } from '../environments/environment';
 
@@ -20,6 +21,7 @@ import { AuthService } from './shared/services/auth.service';
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
