@@ -39,7 +39,7 @@ const asyncObsevable = new Observable((subscriber) => {
     console.log("leak");
   }, 1000);
 
-  subscriber.complete();
+  //subscriber.complete();
   // clear asyn tasks since setInterval will continue after .complete();
   return () => {
     clearInterval(id);
@@ -48,8 +48,8 @@ const asyncObsevable = new Observable((subscriber) => {
 
 console.log("--before--");
 
-//Observer
-asyncObsevable.subscribe({
+//Observer - returns an object only to unsubscribe
+const subscription = asyncObsevable.subscribe({
   next: (value) => {
     console.log(value);
   },
@@ -61,5 +61,19 @@ asyncObsevable.subscribe({
     console.error(err);
   }
 });
+
+// Avoid memory leak by unsubscribing of the observer
+setTimeout(() => {
+  subscription.unsubscribe();
+}, 4000);
+
+// Observable continues to emit. We can subscribe again:
+// setTimeout(() => {
+//   asyncObsevable.subscribe({
+//     next: (value) => {
+//       console.log(value);
+//     }
+//   });
+// }, 10000);
 
 console.log("--after--");
