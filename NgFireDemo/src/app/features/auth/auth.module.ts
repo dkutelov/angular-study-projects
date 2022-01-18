@@ -8,10 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
-  declarations: [LoginPageComponent, LoginComponent],
+  declarations: [LoginPageComponent, LoginFormComponent, RegisterPageComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
