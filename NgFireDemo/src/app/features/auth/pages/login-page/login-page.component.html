@@ -10,7 +10,10 @@
     </div>
     <div class="form-container">
       <h1>Login</h1>
-      <h5>Sign in with your email</h5>
+      <button class="mat-raised-button" (click)="loginWithGoogle()">
+        Sign In with Google
+      </button>
+      <h5>Or sign in with your email</h5>
       <app-login-form (formData)="login($event)"></app-login-form>
     </div>
   </div>

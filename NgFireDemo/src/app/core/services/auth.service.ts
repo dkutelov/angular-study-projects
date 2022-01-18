@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import {
+  GoogleAuthProvider,
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from '@angular/fire/auth';
 import { UserCredentails } from '../interfaces/user-credentails';
@@ -20,6 +22,10 @@ export class AuthService {
 
   login({ email, password }: UserCredentails) {
     return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  loginWithGoogle() {
+    return signInWithPopup(this.auth, new GoogleAuthProvider());
   }
 
   logout() {
