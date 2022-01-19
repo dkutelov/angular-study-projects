@@ -5,7 +5,7 @@ import { interval, timer, fromEvent, of, from } from "rxjs";
 
 // Creation Operators - creates observable from any source of data
 // 1. Interval
-//const observable = interval(1000); // setIntrval wrapped with an onservable
+//const observable = interval(1000); // setIntrval wrapped with an onservable; emits values 0,1,2,3...
 
 // 2. Timer - emits first value
 // const observable = timer(1000, 1000); // first - 1000 - after one sec, second 1000 is interval
