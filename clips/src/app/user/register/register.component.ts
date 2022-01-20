@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
+  inSubmission = false;
   // Declare outside FormGroup otherwise the props will have type AbstractControl
   // new new FormControl -> type FormControl that we can pass down to Input component
   name = new FormControl('', [Validators.required, Validators.minLength(3)]);
@@ -40,31 +41,24 @@ export class RegisterComponent {
     phoneNumber: this.phoneNumber,
   });
 
-  constructor(private angularFireAuth: AngularFireAuth) {}
+  constructor(private authService: AuthService) {}
 
   async register() {
     //reset
     this.showAlert = true;
     this.alertMsg = 'Please, wait! Your account is being created!';
     this.alertColor = 'blue';
-
-    const { email, password } = this.registerForm.value;
+    this.inSubmission = true;
 
     try {
-      //both: regiter and sign in
-      const userCred =
-        await this.angularFireAuth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-
-      console.log(userCred);
+      await this.authService.createUser(this.registerForm.value);
     } catch (error) {
       // error of firebase come with code and message
       console.log(error);
       this.alertMsg = 'An unexprected error occured! Please, try again later.';
       this.alertColor = 'red';
-      return; // prevent excution of further code
+      this.inSubmission = false;
+      return; // prevent execution of further code
     }
 
     this.alertMsg = 'Success! Your accont has been created.';
