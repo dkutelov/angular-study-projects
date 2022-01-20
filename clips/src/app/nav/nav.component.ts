@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { ModalService } from '../services/modal.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ModalService } from '../services/modal.service';
 export class NavComponent implements OnInit {
   @Input() tabTitle = '';
 
-  constructor(public modal: ModalService) {}
+  constructor(public modal: ModalService, public authService: AuthService) {}
 
   ngOnInit(): void {}
 
