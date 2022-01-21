@@ -56,4 +56,12 @@ export class AuthService {
       displayName: userData.name,
     });
   }
+
+  async loginUser(email: string, password: string) {
+    await this.angularFireAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  async logoutUser() {
+    await this.angularFireAuth.signOut();
+  }
 }

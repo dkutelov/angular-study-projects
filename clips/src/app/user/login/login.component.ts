@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent {
   alertColor = 'blue';
   inSubmission = false;
 
-  constructor(private angularFireAuth: AngularFireAuth) {}
+  constructor(private authService: AuthService) {}
 
   async login(form: NgForm) {
     if (form.valid) {
@@ -25,7 +25,7 @@ export class LoginComponent {
       const { email, password } = form.value;
 
       try {
-        await this.angularFireAuth.signInWithEmailAndPassword(email, password);
+        await this.authService.loginUser(email, password);
       } catch (error) {
         console.error(error);
         this.alertMsg =
