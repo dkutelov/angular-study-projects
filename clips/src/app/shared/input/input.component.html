@@ -26,4 +26,7 @@
     Password must be at least 8 characters long and contain an uppercase letter,
     an lowercase letter, and a number!
   </p>
+  <p class="text-red-400" *ngIf="control.errors?.['noMatch']">
+    Passwords to not match!
+  </p>
 </ng-container>
