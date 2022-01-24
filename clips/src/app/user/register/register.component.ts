@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { EmailTaken } from '../validators/email-taken';
 import { RegisterValidators } from '../validators/register-validators';
 
 @Component({
@@ -13,7 +14,11 @@ export class RegisterComponent {
   // Declare outside FormGroup otherwise the props will have type AbstractControl
   // new new FormControl -> type FormControl that we can pass down to Input component
   name = new FormControl('', [Validators.required, Validators.minLength(3)]);
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = new FormControl(
+    '',
+    [Validators.required, Validators.email],
+    [this.emailTaken.validate]
+  );
   age = new FormControl('', [
     Validators.required,
     Validators.min(18),
@@ -47,7 +52,10 @@ export class RegisterComponent {
     [RegisterValidators.match('password', 'confirmPassword')]
   );
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private emailTaken: EmailTaken
+  ) {}
 
   async register() {
     //reset
