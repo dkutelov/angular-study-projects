@@ -11,15 +11,15 @@ const routes: Routes = [
     component: WelcomeComponent,
   },
   {
-    path: '/signup',
+    path: 'signup',
     component: SignupComponent,
   },
   {
-    path: '/login',
+    path: 'login',
     component: LoginComponent,
   },
   {
-    path: '/training',
+    path: 'training',
     component: TrainingComponent,
   },
 ];
